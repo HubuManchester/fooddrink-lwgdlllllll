@@ -12,6 +12,7 @@ public class HistoryRecord
     public int Id { get; set; }
 
     public string FoodName { get; set; } = string.Empty;
+    public string Category { get; set; } = "Other";
     public double Calories { get; set; }
     public double Protein { get; set; }
     public double Fat { get; set; }
@@ -26,6 +27,7 @@ public class HistoryRecord
         return new HistoryRecord
         {
             FoodName = item.Name,
+            Category = string.IsNullOrWhiteSpace(item.Category) ? "Other" : item.Category,
             Calories = item.Calories,
             Protein = item.Protein,
             Fat = item.Fat,
@@ -42,6 +44,7 @@ public class HistoryRecord
         return new FoodItem
         {
             Name = FoodName,
+            Category = Category,
             Calories = Calories,
             Protein = Protein,
             Fat = Fat,

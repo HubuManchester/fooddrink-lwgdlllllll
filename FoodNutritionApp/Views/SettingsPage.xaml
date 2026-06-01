@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodNutritionApp.ViewModels"
+             x:Class="FoodNutritionApp.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <Label Text="{Binding StatusMessage}"
+                   FontSize="{DynamicResource FontSizeBody}"
+                   TextColor="{StaticResource TextSecondary}"
+                   LineBreakMode="WordWrap" />
+
+            <Label Text="Theme"
+                   FontSize="{DynamicResource FontSizeSubtitle}"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryDark}" />
+
+            <Button Text="Follow System"
+                    Command="{Binding SelectThemeCommand}"
+                    CommandParameter="Follow System"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White" />
+            <Button Text="Light Mode"
+                    Command="{Binding SelectThemeCommand}"
+                    CommandParameter="Light"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White" />
+            <Button Text="Dark Mode"
+                    Command="{Binding SelectThemeCommand}"
+                    CommandParameter="Dark"
+                    BackgroundColor="{StaticResource PrimaryDark}"
+                    TextColor="White" />
+
+            <Label Text="{Binding SelectedThemeLabel, StringFormat='Current: {0}'}"
+                   FontSize="{DynamicResource FontSizeBody}" />
+
+            <Label Text="Text Size"
+                   FontSize="{DynamicResource FontSizeSubtitle}"
+                   FontAttributes="Bold"
+                   Margin="0,12,0,0"
+                   TextColor="{StaticResource PrimaryDark}" />
+
+            <Button Text="Normal"
+                    Command="{Binding SelectFontScaleCommand}"
+                    CommandParameter="Normal"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White" />
+            <Button Text="Large"
+                    Command="{Binding SelectFontScaleCommand}"
+                    CommandParameter="Large"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White" />
+            <Button Text="Extra Large"
+                    Command="{Binding SelectFontScaleCommand}"
+                    CommandParameter="Extra Large"
+                    BackgroundColor="{StaticResource PrimaryDark}"
+                    TextColor="White" />
+
+            <Label Text="{Binding SelectedFontScaleLabel, StringFormat='Current: {0}'}"
+                   FontSize="{DynamicResource FontSizeBody}" />
+
+            <Label Text="Sample text at current size"
+                   FontSize="{DynamicResource FontSizeBody}"
+                   TextColor="{StaticResource TextPrimary}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

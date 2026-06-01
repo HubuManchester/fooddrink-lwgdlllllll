@@ -17,6 +17,9 @@
                            FontAttributes="Bold"
                            TextColor="White"
                            SemanticProperties.HeadingLevel="Level1" />
+                    <Label Text="{Binding FoodItem.Category, StringFormat='Category: {0}'}"
+                           FontSize="16"
+                           TextColor="White" />
                     <Label Text="{Binding FoodItem.ServingSize, StringFormat='Serving: {0}'}"
                            FontSize="16"
                            TextColor="White" />

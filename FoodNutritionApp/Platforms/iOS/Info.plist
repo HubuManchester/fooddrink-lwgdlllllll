@@ -28,5 +28,11 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses your location to display GPS coordinates for the food nutrition assignment.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to photograph food items.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app uses the microphone for voice food search.</string>
 </dict>
 </plist>

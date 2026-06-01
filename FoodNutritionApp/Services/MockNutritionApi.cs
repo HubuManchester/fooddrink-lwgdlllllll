@@ -10,20 +10,20 @@ public class MockNutritionApi : INutritionApi
 {
     private static readonly Dictionary<string, FoodItem> FoodDatabase = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["apple"] = new() { Name = "Apple", Calories = 52, Protein = 0.3, Fat = 0.2, Carbohydrates = 14, Fiber = 2.4, ServingSize = "100g" },
-        ["banana"] = new() { Name = "Banana", Calories = 89, Protein = 1.1, Fat = 0.3, Carbohydrates = 23, Fiber = 2.6, ServingSize = "100g" },
-        ["orange"] = new() { Name = "Orange", Calories = 47, Protein = 0.9, Fat = 0.1, Carbohydrates = 12, Fiber = 2.4, ServingSize = "100g" },
-        ["chicken"] = new() { Name = "Chicken Breast", Calories = 165, Protein = 31, Fat = 3.6, Carbohydrates = 0, Fiber = 0, ServingSize = "100g" },
-        ["rice"] = new() { Name = "White Rice", Calories = 130, Protein = 2.7, Fat = 0.3, Carbohydrates = 28, Fiber = 0.4, ServingSize = "100g" },
-        ["bread"] = new() { Name = "Whole Wheat Bread", Calories = 247, Protein = 13, Fat = 3.4, Carbohydrates = 41, Fiber = 7, ServingSize = "100g" },
-        ["egg"] = new() { Name = "Boiled Egg", Calories = 155, Protein = 13, Fat = 11, Carbohydrates = 1.1, Fiber = 0, ServingSize = "100g" },
-        ["milk"] = new() { Name = "Whole Milk", Calories = 61, Protein = 3.2, Fat = 3.3, Carbohydrates = 4.8, Fiber = 0, ServingSize = "100ml" },
-        ["salmon"] = new() { Name = "Salmon", Calories = 208, Protein = 20, Fat = 13, Carbohydrates = 0, Fiber = 0, ServingSize = "100g" },
-        ["broccoli"] = new() { Name = "Broccoli", Calories = 34, Protein = 2.8, Fat = 0.4, Carbohydrates = 7, Fiber = 2.6, ServingSize = "100g" },
-        ["pizza"] = new() { Name = "Cheese Pizza", Calories = 266, Protein = 11, Fat = 10, Carbohydrates = 33, Fiber = 2.3, ServingSize = "100g" },
-        ["burger"] = new() { Name = "Beef Burger", Calories = 295, Protein = 17, Fat = 14, Carbohydrates = 24, Fiber = 1.5, ServingSize = "100g" },
-        ["苹果"] = new() { Name = "Apple (苹果)", Calories = 52, Protein = 0.3, Fat = 0.2, Carbohydrates = 14, Fiber = 2.4, ServingSize = "100g" },
-        ["香蕉"] = new() { Name = "Banana (香蕉)", Calories = 89, Protein = 1.1, Fat = 0.3, Carbohydrates = 23, Fiber = 2.6, ServingSize = "100g" },
+        ["apple"] = new() { Name = "Apple", Category = "Fruit", Calories = 52, Protein = 0.3, Fat = 0.2, Carbohydrates = 14, Fiber = 2.4, ServingSize = "100g" },
+        ["banana"] = new() { Name = "Banana", Category = "Fruit", Calories = 89, Protein = 1.1, Fat = 0.3, Carbohydrates = 23, Fiber = 2.6, ServingSize = "100g" },
+        ["orange"] = new() { Name = "Orange", Category = "Fruit", Calories = 47, Protein = 0.9, Fat = 0.1, Carbohydrates = 12, Fiber = 2.4, ServingSize = "100g" },
+        ["chicken"] = new() { Name = "Chicken Breast", Category = "Meat", Calories = 165, Protein = 31, Fat = 3.6, Carbohydrates = 0, Fiber = 0, ServingSize = "100g" },
+        ["rice"] = new() { Name = "White Rice", Category = "Grain", Calories = 130, Protein = 2.7, Fat = 0.3, Carbohydrates = 28, Fiber = 0.4, ServingSize = "100g" },
+        ["bread"] = new() { Name = "Whole Wheat Bread", Category = "Grain", Calories = 247, Protein = 13, Fat = 3.4, Carbohydrates = 41, Fiber = 7, ServingSize = "100g" },
+        ["egg"] = new() { Name = "Boiled Egg", Category = "Dairy", Calories = 155, Protein = 13, Fat = 11, Carbohydrates = 1.1, Fiber = 0, ServingSize = "100g" },
+        ["milk"] = new() { Name = "Whole Milk", Category = "Dairy", Calories = 61, Protein = 3.2, Fat = 3.3, Carbohydrates = 4.8, Fiber = 0, ServingSize = "100ml" },
+        ["salmon"] = new() { Name = "Salmon", Category = "Meat", Calories = 208, Protein = 20, Fat = 13, Carbohydrates = 0, Fiber = 0, ServingSize = "100g" },
+        ["broccoli"] = new() { Name = "Broccoli", Category = "Vegetable", Calories = 34, Protein = 2.8, Fat = 0.4, Carbohydrates = 7, Fiber = 2.6, ServingSize = "100g" },
+        ["pizza"] = new() { Name = "Cheese Pizza", Category = "Other", Calories = 266, Protein = 11, Fat = 10, Carbohydrates = 33, Fiber = 2.3, ServingSize = "100g" },
+        ["burger"] = new() { Name = "Beef Burger", Category = "Other", Calories = 295, Protein = 17, Fat = 14, Carbohydrates = 24, Fiber = 1.5, ServingSize = "100g" },
+        ["苹果"] = new() { Name = "Apple (苹果)", Category = "Fruit", Calories = 52, Protein = 0.3, Fat = 0.2, Carbohydrates = 14, Fiber = 2.4, ServingSize = "100g" },
+        ["香蕉"] = new() { Name = "Banana (香蕉)", Category = "Fruit", Calories = 89, Protein = 1.1, Fat = 0.3, Carbohydrates = 23, Fiber = 2.6, ServingSize = "100g" },
     };
 
     private static readonly string[] RecognizedFoods = ["Apple", "Banana", "Orange", "Chicken Breast", "Broccoli", "Salmon"];
@@ -73,6 +73,7 @@ public class MockNutritionApi : INutritionApi
         return new FoodItem
         {
             Name = source.Name,
+            Category = source.Category,
             Calories = source.Calories,
             Protein = source.Protein,
             Fat = source.Fat,

@@ -8,7 +8,7 @@ public partial class MainViewModel : BaseViewModel
     public MainViewModel()
     {
         Title = "Food Nutrition";
-        StatusMessage = "Scan, search, or review your food history.";
+        StatusMessage = "Scan, search, browse your food list, or check location.";
     }
 
     [RelayCommand]
@@ -27,6 +27,18 @@ public partial class MainViewModel : BaseViewModel
     private async Task GoToHistoryAsync()
     {
         await Shell.Current.GoToAsync(nameof(Views.HistoryPage));
+    }
+
+    [RelayCommand]
+    private async Task GoToLocationAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(Views.LocationPage));
+    }
+
+    [RelayCommand]
+    private async Task GoToSettingsAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(Views.SettingsPage));
     }
 
     [RelayCommand]

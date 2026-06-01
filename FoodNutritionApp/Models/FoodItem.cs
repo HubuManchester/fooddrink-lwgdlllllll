@@ -6,6 +6,7 @@ namespace FoodNutritionApp.Models;
 public class FoodItem
 {
     public string Name { get; set; } = string.Empty;
+    public string Category { get; set; } = "Other";
     public double Calories { get; set; }
     public double Protein { get; set; }
     public double Fat { get; set; }
@@ -19,7 +20,7 @@ public class FoodItem
     /// </summary>
     public string ToSpeechSummary()
     {
-        return $"{Name}. Per {ServingSize}: {Calories:F0} kilocalories. " +
+        return $"{Name}, category {Category}. Per {ServingSize}: {Calories:F0} kilocalories. " +
                $"Protein {Protein:F1} grams. Fat {Fat:F1} grams. " +
                $"Carbohydrates {Carbohydrates:F1} grams. Fiber {Fiber:F1} grams.";
     }

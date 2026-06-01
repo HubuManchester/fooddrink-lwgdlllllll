@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodNutritionApp.ViewModels"
+             x:Class="FoodNutritionApp.Views.EditRecordPage"
+             x:DataType="vm:EditRecordViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <Label Text="Edit food record (Update)"
+                   FontSize="{DynamicResource FontSizeSubtitle}"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryDark}" />
+
+            <Entry Text="{Binding FoodName}" Placeholder="Food name" FontSize="{DynamicResource FontSizeBody}" />
+            <Picker Title="Category"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    FontSize="{DynamicResource FontSizeBody}" />
+            <Entry Text="{Binding CaloriesText}" Placeholder="Calories (kcal)" Keyboard="Numeric" />
+            <Entry Text="{Binding ProteinText}" Placeholder="Protein (g)" Keyboard="Numeric" />
+            <Entry Text="{Binding FatText}" Placeholder="Fat (g)" Keyboard="Numeric" />
+            <Entry Text="{Binding CarbohydratesText}" Placeholder="Carbohydrates (g)" Keyboard="Numeric" />
+            <Entry Text="{Binding FiberText}" Placeholder="Fiber (g)" Keyboard="Numeric" />
+            <Entry Text="{Binding ServingSize}" Placeholder="Serving size" />
+
+            <Label Text="{Binding ValidationMessage}"
+                   TextColor="{StaticResource Error}"
+                   IsVisible="{Binding ValidationMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+
+            <Label Text="{Binding StatusMessage}"
+                   TextColor="{StaticResource TextSecondary}"
+                   LineBreakMode="WordWrap" />
+
+            <Button Text="Save Changes"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White"
+                    HeightRequest="52" />
+            <Button Text="Cancel"
+                    Command="{Binding CancelCommand}"
+                    BackgroundColor="{StaticResource Surface}"
+                    TextColor="{StaticResource TextPrimary}"
+                    BorderColor="{StaticResource Primary}"
+                    BorderWidth="2"
+                    HeightRequest="48" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodNutritionApp.ViewModels"
+             x:Class="FoodNutritionApp.Views.LocationPage"
+             x:DataType="vm:LocationViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+            <Label Text="{Binding StatusMessage}"
+                   FontSize="{DynamicResource FontSizeBody}"
+                   TextColor="{StaticResource TextSecondary}"
+                   LineBreakMode="WordWrap" />
+
+            <Frame Padding="20" CornerRadius="16" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="GPS Coordinates"
+                           FontSize="{DynamicResource FontSizeSubtitle}"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryDark}" />
+                    <Label Text="{Binding LatitudeText, StringFormat='Latitude: {0}'}"
+                           FontSize="{DynamicResource FontSizeBody}" />
+                    <Label Text="{Binding LongitudeText, StringFormat='Longitude: {0}'}"
+                           FontSize="{DynamicResource FontSizeBody}" />
+                    <Label Text="{Binding AccuracyText}"
+                           FontSize="14"
+                           TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="20" CornerRadius="16" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Address (optional)"
+                           FontSize="{DynamicResource FontSizeSubtitle}"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryDark}" />
+                    <Label Text="{Binding AddressText}"
+                           FontSize="{DynamicResource FontSizeBody}"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Primary}" />
+
+            <Button Text="Get Current Location"
+                    Command="{Binding GetLocationCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    FontSize="{DynamicResource FontSizeBody}"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    SemanticProperties.Description="Get current GPS location" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

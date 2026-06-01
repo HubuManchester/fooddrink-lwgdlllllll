@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui;
 using FoodNutritionApp.Services;
 using FoodNutritionApp.ViewModels;
 using FoodNutritionApp.Views;
@@ -20,9 +20,10 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Services
+        builder.Services.AddSingleton<AppSettingsService>();
+        builder.Services.AddSingleton<LocalFoodDataService>();
         builder.Services.AddSingleton<DatabaseService>();
-        builder.Services.AddSingleton<INutritionApi>(sp => new RealNutritionApi(new HttpClient()));
+        builder.Services.AddSingleton<INutritionApi, LocalFirstNutritionApi>();
 
 #if ANDROID
         builder.Services.AddSingleton<ILightSensorService, Platforms.Android.AndroidLightSensorService>();
@@ -30,25 +31,31 @@ public static class MauiProgram
         builder.Services.AddSingleton<ILightSensorService, DefaultLightSensorService>();
 #endif
 
-        // ViewModels
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<CameraViewModel>();
         builder.Services.AddTransient<SearchViewModel>();
         builder.Services.AddTransient<DetailViewModel>();
         builder.Services.AddTransient<HistoryViewModel>();
+        builder.Services.AddTransient<EditRecordViewModel>();
+        builder.Services.AddTransient<LocationViewModel>();
+        builder.Services.AddTransient<SettingsViewModel>();
 
-        // Views
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<CameraPage>();
         builder.Services.AddTransient<SearchPage>();
         builder.Services.AddTransient<DetailPage>();
         builder.Services.AddTransient<HistoryPage>();
+        builder.Services.AddTransient<EditRecordPage>();
+        builder.Services.AddTransient<LocationPage>();
+        builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<HelpPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
-        return builder.Build();
+        var app = builder.Build();
+        app.Services.GetRequiredService<AppSettingsService>().Initialize();
+        return app;
     }
 }

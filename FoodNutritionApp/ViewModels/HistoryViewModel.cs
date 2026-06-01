@@ -9,14 +9,27 @@ namespace FoodNutritionApp.ViewModels;
 public partial class HistoryViewModel : BaseViewModel
 {
     private readonly DatabaseService _databaseService;
+    private readonly LocalFoodDataService _localFoodData;
+    private List<HistoryRecord> _allRecords = [];
 
     [ObservableProperty]
     private ObservableCollection<HistoryRecord> _records = [];
 
-    public HistoryViewModel(DatabaseService databaseService)
+    [ObservableProperty]
+    private string _selectedCategory = FoodCategories.All;
+
+    public IList<string> CategoryOptions { get; } = FoodCategories.FilterOptions;
+
+    public HistoryViewModel(DatabaseService databaseService, LocalFoodDataService localFoodData)
     {
         _databaseService = databaseService;
-        Title = "History";
+        _localFoodData = localFoodData;
+        Title = "Food List";
+    }
+
+    partial void OnSelectedCategoryChanged(string value)
+    {
+        ApplyCategoryFilter();
     }
 
     public async Task LoadRecordsAsync()
@@ -30,20 +43,33 @@ public partial class HistoryViewModel : BaseViewModel
 
         try
         {
-            var items = await _databaseService.GetAllRecordsAsync();
-            Records = new ObservableCollection<HistoryRecord>(items);
-            StatusMessage = Records.Count == 0
-                ? "No saved records yet. Scan or search for food to build your history."
-                : $"{Records.Count} record(s) saved locally.";
+            await _databaseService.InitializeAsync(_localFoodData);
+            _allRecords = await _databaseService.GetAllRecordsAsync();
+            ApplyCategoryFilter();
+            StatusMessage = _allRecords.Count == 0
+                ? "No saved records yet. Scan or search for food to build your list."
+                : $"{Records.Count} of {_allRecords.Count} record(s) shown.";
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Could not load history: {ex.Message}";
+            StatusMessage = $"Could not load records: {ex.Message}";
         }
         finally
         {
             IsBusy = false;
         }
+    }
+
+    private void ApplyCategoryFilter()
+    {
+        IEnumerable<HistoryRecord> filtered = _allRecords;
+        if (SelectedCategory != FoodCategories.All)
+        {
+            filtered = _allRecords.Where(r =>
+                r.Category.Equals(SelectedCategory, StringComparison.OrdinalIgnoreCase));
+        }
+
+        Records = new ObservableCollection<HistoryRecord>(filtered);
     }
 
     [RelayCommand]
@@ -69,6 +95,17 @@ public partial class HistoryViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task EditRecordAsync(HistoryRecord record)
+    {
+        if (record == null)
+        {
+            return;
+        }
+
+        await Shell.Current.GoToAsync($"{nameof(Views.EditRecordPage)}?RecordId={record.Id}");
+    }
+
+    [RelayCommand]
     private async Task DeleteRecordAsync(HistoryRecord record)
     {
         if (record == null)
@@ -79,6 +116,7 @@ public partial class HistoryViewModel : BaseViewModel
         try
         {
             await _databaseService.DeleteRecordAsync(record);
+            _allRecords.Remove(record);
             Records.Remove(record);
             StatusMessage = "Record deleted.";
         }
@@ -92,7 +130,7 @@ public partial class HistoryViewModel : BaseViewModel
     private async Task ClearAllAsync()
     {
         var confirm = await Shell.Current.DisplayAlertAsync(
-            "Clear history",
+            "Clear list",
             "Delete all saved food records?",
             "Delete all",
             "Cancel");
@@ -105,12 +143,13 @@ public partial class HistoryViewModel : BaseViewModel
         try
         {
             await _databaseService.ClearAllAsync();
+            _allRecords.Clear();
             Records.Clear();
-            StatusMessage = "All history cleared.";
+            StatusMessage = "All records cleared.";
         }
         catch (Exception ex)
         {
-            StatusMessage = $"Could not clear history: {ex.Message}";
+            StatusMessage = $"Could not clear records: {ex.Message}";
         }
     }
 }

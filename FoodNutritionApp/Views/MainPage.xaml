@@ -43,14 +43,32 @@
                     CornerRadius="12"
                     AutomationProperties.Name="Open manual food search" />
 
-            <Button Text="📋 History"
+            <Button Text="📋 Food List"
                     Command="{Binding GoToHistoryCommand}"
                     BackgroundColor="{StaticResource PrimaryDark}"
                     TextColor="White"
-                    FontSize="18"
+                    FontSize="{DynamicResource FontSizeBody}"
                     HeightRequest="56"
                     CornerRadius="12"
-                    AutomationProperties.Name="Open saved food history" />
+                    SemanticProperties.Description="Open saved food list with category filter" />
+
+            <Button Text="📍 Location"
+                    Command="{Binding GoToLocationCommand}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    FontSize="{DynamicResource FontSizeBody}"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    SemanticProperties.Description="Open GPS location page" />
+
+            <Button Text="⚙ Settings"
+                    Command="{Binding GoToSettingsCommand}"
+                    BackgroundColor="{StaticResource AccentDark}"
+                    TextColor="White"
+                    FontSize="{DynamicResource FontSizeBody}"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    SemanticProperties.Description="Open theme and text size settings" />
 
             <Button Text="❓ Accessibility Help"
                     Command="{Binding GoToHelpCommand}"

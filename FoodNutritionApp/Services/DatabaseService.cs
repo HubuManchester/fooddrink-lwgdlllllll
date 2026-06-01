@@ -10,6 +10,7 @@ public class DatabaseService
 {
     private SQLiteAsyncConnection? _connection;
     private readonly string _databasePath;
+    private bool _initialized;
 
     public DatabaseService()
     {
@@ -25,13 +26,60 @@ public class DatabaseService
 
         _connection = new SQLiteAsyncConnection(_databasePath);
         await _connection.CreateTableAsync<HistoryRecord>();
+        await MigrateSchemaAsync(_connection);
         return _connection;
+    }
+
+    private static async Task MigrateSchemaAsync(SQLiteAsyncConnection db)
+    {
+        try
+        {
+            await db.ExecuteAsync("ALTER TABLE HistoryRecords ADD COLUMN Category TEXT DEFAULT 'Other'");
+        }
+        catch
+        {
+            // Column already exists on upgraded databases.
+        }
+    }
+
+    public async Task InitializeAsync(LocalFoodDataService localFoodData)
+    {
+        if (_initialized)
+        {
+            return;
+        }
+
+        await GetConnectionAsync();
+        var db = _connection!;
+        var count = await db.Table<HistoryRecord>().CountAsync();
+        if (count == 0)
+        {
+            var seedFoods = await localFoodData.GetAllFoodsAsync();
+            foreach (var food in seedFoods.Take(6))
+            {
+                await db.InsertAsync(HistoryRecord.FromFoodItem(food));
+            }
+        }
+
+        _initialized = true;
     }
 
     public async Task SaveRecordAsync(FoodItem item)
     {
         var db = await GetConnectionAsync();
         await db.InsertAsync(HistoryRecord.FromFoodItem(item));
+    }
+
+    public async Task UpdateRecordAsync(HistoryRecord record)
+    {
+        var db = await GetConnectionAsync();
+        await db.UpdateAsync(record);
+    }
+
+    public async Task<HistoryRecord?> GetRecordByIdAsync(int id)
+    {
+        var db = await GetConnectionAsync();
+        return await db.Table<HistoryRecord>().FirstOrDefaultAsync(r => r.Id == id);
     }
 
     public async Task<List<HistoryRecord>> GetAllRecordsAsync()
