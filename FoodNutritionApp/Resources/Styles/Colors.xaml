@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Food theme palette with high-contrast friendly colors -->
+    <Color x:Key="Primary">#2E7D32</Color>
+    <Color x:Key="PrimaryDark">#1B5E20</Color>
+    <Color x:Key="PrimaryLight">#A5D6A7</Color>
+    <Color x:Key="Accent">#FF8F00</Color>
+    <Color x:Key="AccentDark">#E65100</Color>
+    <Color x:Key="Background">#FAFAFA</Color>
+    <Color x:Key="Surface">#FFFFFF</Color>
+    <Color x:Key="TextPrimary">#1B1B1B</Color>
+    <Color x:Key="TextSecondary">#424242</Color>
+    <Color x:Key="Error">#C62828</Color>
+    <Color x:Key="Success">#2E7D32</Color>
+
+    <!-- High contrast mode -->
+    <Color x:Key="HighContrastBackground">#000000</Color>
+    <Color x:Key="HighContrastText">#FFFFFF</Color>
+    <Color x:Key="HighContrastAccent">#FFD600</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}" />
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
+
+    <!-- Required by Styles.xaml (MAUI template defaults) -->
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+    <Color x:Key="Gray100">#E1E1E1</Color>
+    <Color x:Key="Gray200">#C8C8C8</Color>
+    <Color x:Key="Gray300">#ACACAC</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6E6E6E</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
+    <Color x:Key="PrimaryDarkText">#242424</Color>
+    <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="SecondaryDarkText">#1B5E20</Color>
+    <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="Magenta">#FF8F00</Color>
+    <Color x:Key="OffBlack">#1f1f1f</Color>
+</ResourceDictionary>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodNutritionApp.ViewModels"
+             x:Class="FoodNutritionApp.Views.SearchPage"
+             x:DataType="vm:SearchViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <Label Text="Enter a food name or tap the microphone to speak."
+                   FontSize="16"
+                   TextColor="{StaticResource TextSecondary}"
+                   LineBreakMode="WordWrap" />
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Entry Text="{Binding SearchText}"
+                       Placeholder="e.g. apple, chicken, rice"
+                       FontSize="18"
+                       HeightRequest="50"
+                       SemanticProperties.Description="Food name search input"
+                       Grid.Column="0" />
+                <Button Text="🎤"
+                        Command="{Binding VoiceInputCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        WidthRequest="56"
+                        HeightRequest="50"
+                        CornerRadius="10"
+                        Grid.Column="1"
+                        AutomationProperties.Name="Voice input microphone" />
+            </Grid>
+
+            <Label Text="{Binding ValidationMessage}"
+                   TextColor="{StaticResource Error}"
+                   FontSize="14"
+                   IsVisible="{Binding ValidationMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource Primary}" />
+
+            <Button Text="Search Nutrition"
+                    Command="{Binding SearchCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    AutomationProperties.Name="Search food nutrition information" />
+
+            <Label Text="{Binding StatusMessage}"
+                   FontSize="15"
+                   TextColor="{StaticResource TextSecondary}"
+                   LineBreakMode="WordWrap"
+                   IsVisible="{Binding StatusMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

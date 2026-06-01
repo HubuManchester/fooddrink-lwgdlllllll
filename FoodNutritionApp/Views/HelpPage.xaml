@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodNutritionApp.Views.HelpPage"
+             Title="Accessibility Help"
+             BackgroundColor="{StaticResource Background}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="14">
+
+            <Label Text="Accessibility (WCAG 2)"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryDark}"
+                   SemanticProperties.HeadingLevel="Level1" />
+
+            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+                   Text="This app follows Web Content Accessibility Guidelines (WCAG 2) principles:" />
+
+            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+                   Text="• Perceivable: Large readable fonts, high-contrast Food theme colours, and Text-to-Speech on the nutrition detail page." />
+
+            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+                   Text="• Operable: All actions are available through large buttons with AutomationProperties.Name for screen readers." />
+
+            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+                   Text="• Understandable: Clear validation messages and user-friendly error text instead of technical exceptions." />
+
+            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+                   Text="• Robust: MVVM architecture with consistent navigation and platform permission handling." />
+
+            <Label Text="Hardware Features"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   Margin="0,12,0,0"
+                   TextColor="{StaticResource PrimaryDark}"
+                   SemanticProperties.HeadingLevel="Level2" />
+
+            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+                   Text="• Camera – photo food recognition&#10;• Microphone – voice search input&#10;• Flash – auto-enabled in low light&#10;• Vibration – success feedback after scan&#10;• Text-to-Speech – read nutrition aloud&#10;• Ambient light sensor – detects dark environments" />
+
+            <Label Text="Tips"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   Margin="0,12,0,0"
+                   TextColor="{StaticResource PrimaryDark}" />
+
+            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+                   Text="Increase system font size to verify scalable UI. Enable TalkBack (Android) or Narrator (Windows) to test screen reader labels." />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

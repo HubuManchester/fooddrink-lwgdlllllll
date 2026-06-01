@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodNutritionApp.ViewModels"
+             x:Class="FoodNutritionApp.Views.CameraPage"
+             x:DataType="vm:CameraViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+
+            <Label Text="Take a photo of your food. The app will detect low light and enable the flash automatically."
+                   FontSize="16"
+                   TextColor="{StaticResource TextSecondary}"
+                   LineBreakMode="WordWrap"
+                   SemanticProperties.Description="Instructions for photo food recognition" />
+
+            <Label Text="{Binding LightLevelText}"
+                   FontSize="14"
+                   TextColor="{StaticResource PrimaryDark}" />
+
+            <Image Source="{Binding CapturedImage}"
+                   HeightRequest="220"
+                   Aspect="AspectFill"
+                   BackgroundColor="{StaticResource PrimaryLight}"
+                   AutomationProperties.Name="Captured food photo preview" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource Primary}"
+                               HeightRequest="40" />
+
+            <Button Text="Capture and Recognize"
+                    Command="{Binding CaptureAndRecognizeCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    AutomationProperties.Name="Capture food photo and recognize nutrition" />
+
+            <Label Text="{Binding StatusMessage}"
+                   FontSize="15"
+                   TextColor="{StaticResource Error}"
+                   LineBreakMode="WordWrap"
+                   IsVisible="{Binding StatusMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

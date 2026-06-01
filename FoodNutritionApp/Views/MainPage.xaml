@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodNutritionApp.ViewModels"
+             x:Class="FoodNutritionApp.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource Background}"
+             Shell.NavBarIsVisible="True">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <Frame Padding="20" CornerRadius="16" BackgroundColor="{StaticResource Primary}" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="🥗 Food Nutrition"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           SemanticProperties.HeadingLevel="Level1" />
+                    <Label Text="{Binding StatusMessage}"
+                           FontSize="16"
+                           TextColor="White"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="📷 Photo Recognition"
+                    Command="{Binding GoToCameraCommand}"
+                    BackgroundColor="{StaticResource Accent}"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    AutomationProperties.Name="Open photo recognition camera" />
+
+            <Button Text="🔍 Manual Search"
+                    Command="{Binding GoToSearchCommand}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    AutomationProperties.Name="Open manual food search" />
+
+            <Button Text="📋 History"
+                    Command="{Binding GoToHistoryCommand}"
+                    BackgroundColor="{StaticResource PrimaryDark}"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="56"
+                    CornerRadius="12"
+                    AutomationProperties.Name="Open saved food history" />
+
+            <Button Text="❓ Accessibility Help"
+                    Command="{Binding GoToHelpCommand}"
+                    BackgroundColor="{StaticResource Surface}"
+                    TextColor="{StaticResource TextPrimary}"
+                    BorderColor="{StaticResource Primary}"
+                    BorderWidth="2"
+                    FontSize="16"
+                    HeightRequest="52"
+                    CornerRadius="12"
+                    AutomationProperties.Name="Open accessibility help page" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
