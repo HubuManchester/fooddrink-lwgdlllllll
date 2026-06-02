@@ -5,7 +5,7 @@
              x:Class="FoodNutritionApp.Views.EditRecordPage"
              x:DataType="vm:EditRecordViewModel"
              Title="{Binding Title}"
-             BackgroundColor="{StaticResource Background}">
+             BackgroundColor="{DynamicResource Background}">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="12">
@@ -31,7 +31,7 @@
                    IsVisible="{Binding ValidationMessage, Converter={StaticResource StringNotEmptyConverter}}" />
 
             <Label Text="{Binding StatusMessage}"
-                   TextColor="{StaticResource TextSecondary}"
+                   TextColor="{DynamicResource TextSecondary}"
                    LineBreakMode="WordWrap" />
 
             <Button Text="Save Changes"
@@ -41,8 +41,8 @@
                     HeightRequest="52" />
             <Button Text="Cancel"
                     Command="{Binding CancelCommand}"
-                    BackgroundColor="{StaticResource Surface}"
-                    TextColor="{StaticResource TextPrimary}"
+                    BackgroundColor="{DynamicResource Surface}"
+                    TextColor="{DynamicResource TextPrimary}"
                     BorderColor="{StaticResource Primary}"
                     BorderWidth="2"
                     HeightRequest="48" />

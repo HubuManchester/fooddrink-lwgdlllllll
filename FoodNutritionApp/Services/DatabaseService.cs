@@ -34,12 +34,24 @@ public class DatabaseService
     {
         try
         {
-            await db.ExecuteAsync("ALTER TABLE HistoryRecords ADD COLUMN Category TEXT DEFAULT 'Other'");
+            var columns = await db.QueryAsync<TableInfo>("PRAGMA table_info(HistoryRecords)");
+            var hasCategory = columns.Any(c =>
+                string.Equals(c.Name, "Category", StringComparison.OrdinalIgnoreCase));
+
+            if (!hasCategory)
+            {
+                await db.ExecuteAsync("ALTER TABLE HistoryRecords ADD COLUMN Category TEXT DEFAULT 'Other'");
+            }
         }
-        catch
+        catch (SQLiteException)
         {
-            // Column already exists on upgraded databases.
+            // Table may not exist yet on first run; CreateTableAsync handles new databases.
         }
+    }
+
+    private sealed class TableInfo
+    {
+        public string Name { get; set; } = string.Empty;
     }
 
     public async Task InitializeAsync(LocalFoodDataService localFoodData)

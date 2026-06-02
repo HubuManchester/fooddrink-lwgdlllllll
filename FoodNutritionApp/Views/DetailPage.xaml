@@ -5,7 +5,7 @@
              x:Class="FoodNutritionApp.Views.DetailPage"
              x:DataType="vm:DetailViewModel"
              Title="{Binding Title}"
-             BackgroundColor="{StaticResource Background}">
+             BackgroundColor="{DynamicResource Background}">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="14">
@@ -30,57 +30,69 @@
             </Frame>
 
             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
-                <Frame Grid.Row="0" Grid.Column="0" Padding="16" CornerRadius="12" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+                <Frame Grid.Row="0" Grid.Column="0" Padding="16" CornerRadius="12" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
                     <VerticalStackLayout>
-                        <Label Text="Calories" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                        <Label Text="Calories" FontSize="14" TextColor="{DynamicResource TextSecondary}" />
                         <Label Text="{Binding FoodItem.Calories, StringFormat='{0:F0} kcal'}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource AccentDark}" />
                     </VerticalStackLayout>
                 </Frame>
-                <Frame Grid.Row="0" Grid.Column="1" Padding="16" CornerRadius="12" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+                <Frame Grid.Row="0" Grid.Column="1" Padding="16" CornerRadius="12" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
                     <VerticalStackLayout>
-                        <Label Text="Protein" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                        <Label Text="Protein" FontSize="14" TextColor="{DynamicResource TextSecondary}" />
                         <Label Text="{Binding FoodItem.Protein, StringFormat='{0:F1} g'}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource PrimaryDark}" />
                     </VerticalStackLayout>
                 </Frame>
-                <Frame Grid.Row="1" Grid.Column="0" Padding="16" CornerRadius="12" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+                <Frame Grid.Row="1" Grid.Column="0" Padding="16" CornerRadius="12" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
                     <VerticalStackLayout>
-                        <Label Text="Fat" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                        <Label Text="Fat" FontSize="14" TextColor="{DynamicResource TextSecondary}" />
                         <Label Text="{Binding FoodItem.Fat, StringFormat='{0:F1} g'}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource PrimaryDark}" />
                     </VerticalStackLayout>
                 </Frame>
-                <Frame Grid.Row="1" Grid.Column="1" Padding="16" CornerRadius="12" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+                <Frame Grid.Row="1" Grid.Column="1" Padding="16" CornerRadius="12" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
                     <VerticalStackLayout>
-                        <Label Text="Carbs" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                        <Label Text="Carbs" FontSize="14" TextColor="{DynamicResource TextSecondary}" />
                         <Label Text="{Binding FoodItem.Carbohydrates, StringFormat='{0:F1} g'}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource PrimaryDark}" />
                     </VerticalStackLayout>
                 </Frame>
-                <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="16" CornerRadius="12" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+                <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="16" CornerRadius="12" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
                     <VerticalStackLayout>
-                        <Label Text="Fiber" FontSize="14" TextColor="{StaticResource TextSecondary}" />
+                        <Label Text="Fiber" FontSize="14" TextColor="{DynamicResource TextSecondary}" />
                         <Label Text="{Binding FoodItem.Fiber, StringFormat='{0:F1} g'}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource PrimaryDark}" />
                     </VerticalStackLayout>
                 </Frame>
             </Grid>
 
-            <Button Text="🔊 Read Aloud (Accessibility)"
-                    Command="{Binding SpeakNutritionCommand}"
-                    IsEnabled="{Binding IsSpeaking, Converter={StaticResource InvertedBoolConverter}}"
-                    BackgroundColor="{StaticResource Accent}"
-                    TextColor="White"
-                    FontSize="18"
-                    HeightRequest="56"
-                    CornerRadius="12"
-                    AutomationProperties.Name="Read nutrition facts aloud using text to speech" />
+            <Grid HeightRequest="56">
+                <Button Text="🔊 Read Aloud (Accessibility)"
+                        Command="{Binding StartReadingCommand}"
+                        IsVisible="{Binding IsSpeaking, Converter={StaticResource InvertedBoolConverter}}"
+                        BackgroundColor="{StaticResource Accent}"
+                        TextColor="White"
+                        FontSize="18"
+                        HeightRequest="56"
+                        CornerRadius="12"
+                        AutomationProperties.Name="Read nutrition facts aloud using text to speech" />
+
+                <Button Text="⏹ Stop Reading"
+                        Command="{Binding StopReadingCommand}"
+                        IsVisible="{Binding IsSpeaking}"
+                        BackgroundColor="{StaticResource AccentDark}"
+                        TextColor="White"
+                        FontSize="18"
+                        HeightRequest="56"
+                        CornerRadius="12"
+                        AutomationProperties.Name="Stop reading nutrition facts aloud" />
+            </Grid>
 
             <Label Text="{Binding StatusMessage}"
                    FontSize="14"
-                   TextColor="{StaticResource TextSecondary}"
+                   TextColor="{DynamicResource TextSecondary}"
                    LineBreakMode="WordWrap" />
 
             <Button Text="Back"
                     Command="{Binding GoBackCommand}"
-                    BackgroundColor="{StaticResource Surface}"
-                    TextColor="{StaticResource TextPrimary}"
+                    BackgroundColor="{DynamicResource Surface}"
+                    TextColor="{DynamicResource TextPrimary}"
                     BorderColor="{StaticResource Primary}"
                     BorderWidth="2"
                     HeightRequest="48"

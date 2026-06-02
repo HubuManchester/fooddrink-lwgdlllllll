@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodNutritionApp.Views.HelpPage"
              Title="Accessibility Help"
-             BackgroundColor="{StaticResource Background}">
+             BackgroundColor="{DynamicResource Background}">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="14">
@@ -14,19 +14,19 @@
                    TextColor="{StaticResource PrimaryDark}"
                    SemanticProperties.HeadingLevel="Level1" />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="This app follows Web Content Accessibility Guidelines (WCAG 2) principles:" />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="• Perceivable: Large readable fonts, high-contrast Food theme colours, and Text-to-Speech on the nutrition detail page." />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="• Operable: All actions are available through large buttons with AutomationProperties.Name for screen readers." />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="• Understandable: Clear validation messages and user-friendly error text instead of technical exceptions." />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="• Robust: MVVM architecture with consistent navigation and platform permission handling." />
 
             <Label Text="Hardware Features"
@@ -36,7 +36,7 @@
                    TextColor="{StaticResource PrimaryDark}"
                    SemanticProperties.HeadingLevel="Level2" />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="• Camera – photo food recognition&#10;• Microphone – voice search input&#10;• Flash – auto-enabled in low light&#10;• Vibration – success feedback after scan&#10;• Text-to-Speech – read nutrition aloud&#10;• GPS Location – latitude, longitude and address&#10;• Ambient light sensor – detects dark environments" />
 
             <Label Text="Data and CRUD"
@@ -45,7 +45,7 @@
                    Margin="0,12,0,0"
                    TextColor="{StaticResource PrimaryDark}" />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="• Local JSON data is used first, then Mock API as fallback&#10;• Food list supports Create, Read, Update (swipe Edit), Delete&#10;• Pull down on the food list to refresh&#10;• Filter records by category: Fruit, Meat, Drink, etc." />
 
             <Label Text="Settings"
@@ -54,7 +54,7 @@
                    Margin="0,12,0,0"
                    TextColor="{StaticResource PrimaryDark}" />
 
-            <Label FontSize="16" TextColor="{StaticResource TextPrimary}" LineBreakMode="WordWrap"
+            <Label FontSize="16" TextColor="{DynamicResource TextPrimary}" LineBreakMode="WordWrap"
                    Text="Increase system font size to verify scalable UI. Enable TalkBack (Android) or Narrator (Windows) to test screen reader labels." />
 
         </VerticalStackLayout>

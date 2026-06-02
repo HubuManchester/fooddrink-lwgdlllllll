@@ -5,7 +5,7 @@
              x:Class="FoodNutritionApp.Views.MainPage"
              x:DataType="vm:MainViewModel"
              Title="{Binding Title}"
-             BackgroundColor="{StaticResource Background}"
+             BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="True">
 
     <ScrollView>
@@ -72,8 +72,8 @@
 
             <Button Text="❓ Accessibility Help"
                     Command="{Binding GoToHelpCommand}"
-                    BackgroundColor="{StaticResource Surface}"
-                    TextColor="{StaticResource TextPrimary}"
+                    BackgroundColor="{DynamicResource Surface}"
+                    TextColor="{DynamicResource TextPrimary}"
                     BorderColor="{StaticResource Primary}"
                     BorderWidth="2"
                     FontSize="16"

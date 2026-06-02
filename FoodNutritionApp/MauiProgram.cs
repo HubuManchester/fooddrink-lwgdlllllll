@@ -23,7 +23,15 @@ public static class MauiProgram
         builder.Services.AddSingleton<AppSettingsService>();
         builder.Services.AddSingleton<LocalFoodDataService>();
         builder.Services.AddSingleton<DatabaseService>();
-        builder.Services.AddSingleton<INutritionApi, LocalFirstNutritionApi>();
+        builder.Services.AddSingleton<MockNutritionApi>();
+        builder.Services.AddSingleton<HttpClient>();
+        builder.Services.AddSingleton<INutritionApi, HybridNutritionApi>();
+
+#if WINDOWS
+        builder.Services.AddSingleton<ISpeechPlaybackService, Platforms.Windows.WindowsSpeechPlaybackService>();
+#else
+        builder.Services.AddSingleton<ISpeechPlaybackService, MauiTextToSpeechPlaybackService>();
+#endif
 
 #if ANDROID
         builder.Services.AddSingleton<ILightSensorService, Platforms.Android.AndroidLightSensorService>();

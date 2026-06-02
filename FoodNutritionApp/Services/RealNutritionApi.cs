@@ -5,19 +5,16 @@ using FoodNutritionApp.Models;
 namespace FoodNutritionApp.Services;
 
 /// <summary>
-/// Optional real API using USDA FoodData Central (free, no key required for demo endpoint).
-/// Falls back gracefully when the network is unavailable.
+/// USDA FoodData Central search. Returns null when offline or no match (caller uses mock fallback).
 /// </summary>
 public class RealNutritionApi : INutritionApi
 {
     private readonly HttpClient _httpClient;
-    private readonly MockNutritionApi _fallback;
 
     public RealNutritionApi(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _httpClient.Timeout = TimeSpan.FromSeconds(15);
-        _fallback = new MockNutritionApi();
     }
 
     public async Task<FoodItem?> SearchByNameAsync(string foodName, CancellationToken cancellationToken = default)
@@ -29,12 +26,13 @@ public class RealNutritionApi : INutritionApi
 
         try
         {
-            var url = $"https://api.nal.usda.gov/fdc/v1/foods/search?query={Uri.EscapeDataString(foodName.Trim())}&pageSize=1&api_key=DEMO_KEY";
+            var url =
+                $"https://api.nal.usda.gov/fdc/v1/foods/search?query={Uri.EscapeDataString(foodName.Trim())}&pageSize=1&api_key=DEMO_KEY";
             using var response = await _httpClient.GetAsync(url, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
             {
-                return await _fallback.SearchByNameAsync(foodName, cancellationToken);
+                return null;
             }
 
             await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
@@ -42,7 +40,7 @@ public class RealNutritionApi : INutritionApi
 
             if (!document.RootElement.TryGetProperty("foods", out var foods) || foods.GetArrayLength() == 0)
             {
-                return await _fallback.SearchByNameAsync(foodName, cancellationToken);
+                return null;
             }
 
             var food = foods[0];
@@ -61,16 +59,24 @@ public class RealNutritionApi : INutritionApi
                 Source = "USDA API"
             };
         }
+        catch (HttpRequestException)
+        {
+            return null;
+        }
+        catch (TaskCanceledException)
+        {
+            return null;
+        }
         catch (Exception)
         {
-            return await _fallback.SearchByNameAsync(foodName, cancellationToken);
+            return null;
         }
     }
 
     public Task<FoodItem?> RecognizeFromPhotoAsync(Stream photoStream, CancellationToken cancellationToken = default)
     {
-        // Photo recognition requires a vision API key; delegate to mock OCR simulation.
-        return _fallback.RecognizeFromPhotoAsync(photoStream, cancellationToken);
+        // USDA has no photo OCR endpoint.
+        return Task.FromResult<FoodItem?>(null);
     }
 
     private static double GetNutrient(JsonElement nutrients, int nutrientId)

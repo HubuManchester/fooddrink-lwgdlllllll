@@ -5,13 +5,13 @@
              x:Class="FoodNutritionApp.Views.SettingsPage"
              x:DataType="vm:SettingsViewModel"
              Title="{Binding Title}"
-             BackgroundColor="{StaticResource Background}">
+             BackgroundColor="{DynamicResource Background}">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="18">
             <Label Text="{Binding StatusMessage}"
                    FontSize="{DynamicResource FontSizeBody}"
-                   TextColor="{StaticResource TextSecondary}"
+                   TextColor="{DynamicResource TextSecondary}"
                    LineBreakMode="WordWrap" />
 
             <Label Text="Theme"
@@ -36,7 +36,8 @@
                     TextColor="White" />
 
             <Label Text="{Binding SelectedThemeLabel, StringFormat='Current: {0}'}"
-                   FontSize="{DynamicResource FontSizeBody}" />
+                   FontSize="{DynamicResource FontSizeBody}"
+                   TextColor="{DynamicResource TextSecondary}" />
 
             <Label Text="Text Size"
                    FontSize="{DynamicResource FontSizeSubtitle}"
@@ -61,11 +62,12 @@
                     TextColor="White" />
 
             <Label Text="{Binding SelectedFontScaleLabel, StringFormat='Current: {0}'}"
-                   FontSize="{DynamicResource FontSizeBody}" />
+                   FontSize="{DynamicResource FontSizeBody}"
+                   TextColor="{DynamicResource TextSecondary}" />
 
             <Label Text="Sample text at current size"
                    FontSize="{DynamicResource FontSizeBody}"
-                   TextColor="{StaticResource TextPrimary}" />
+                   TextColor="{DynamicResource TextPrimary}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

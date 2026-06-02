@@ -5,16 +5,16 @@
              x:Class="FoodNutritionApp.Views.LocationPage"
              x:DataType="vm:LocationViewModel"
              Title="{Binding Title}"
-             BackgroundColor="{StaticResource Background}">
+             BackgroundColor="{DynamicResource Background}">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="16">
             <Label Text="{Binding StatusMessage}"
                    FontSize="{DynamicResource FontSizeBody}"
-                   TextColor="{StaticResource TextSecondary}"
+                   TextColor="{DynamicResource TextSecondary}"
                    LineBreakMode="WordWrap" />
 
-            <Frame Padding="20" CornerRadius="16" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+            <Frame Padding="20" CornerRadius="16" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="GPS Coordinates"
                            FontSize="{DynamicResource FontSizeSubtitle}"
@@ -26,11 +26,11 @@
                            FontSize="{DynamicResource FontSizeBody}" />
                     <Label Text="{Binding AccuracyText}"
                            FontSize="14"
-                           TextColor="{StaticResource TextSecondary}" />
+                           TextColor="{DynamicResource TextSecondary}" />
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Padding="20" CornerRadius="16" BackgroundColor="{StaticResource Surface}" BorderColor="{StaticResource PrimaryLight}">
+            <Frame Padding="20" CornerRadius="16" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Address (optional)"
                            FontSize="{DynamicResource FontSizeSubtitle}"
