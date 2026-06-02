@@ -9,50 +9,134 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="16">
-            <Label Text="{Binding StatusMessage}"
-                   FontSize="{DynamicResource FontSizeBody}"
-                   TextColor="{DynamicResource TextSecondary}"
-                   LineBreakMode="WordWrap" />
 
-            <Frame Padding="20" CornerRadius="16" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="GPS Coordinates"
-                           FontSize="{DynamicResource FontSizeSubtitle}"
+            <!-- Header banner -->
+            <Frame Padding="20"
+                   CornerRadius="16"
+                   BackgroundColor="{StaticResource Primary}"
+                   HasShadow="True"
+                   BorderColor="Transparent">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="📍 Device Location"
+                           FontSize="26"
                            FontAttributes="Bold"
-                           TextColor="{StaticResource PrimaryDark}" />
-                    <Label Text="{Binding LatitudeText, StringFormat='Latitude: {0}'}"
-                           FontSize="{DynamicResource FontSizeBody}" />
-                    <Label Text="{Binding LongitudeText, StringFormat='Longitude: {0}'}"
-                           FontSize="{DynamicResource FontSizeBody}" />
-                    <Label Text="{Binding AccuracyText}"
+                           TextColor="White"
+                           SemanticProperties.HeadingLevel="Level1" />
+                    <Label Text="GPS coordinates and reverse geocoded address"
+                           FontSize="15"
+                           TextColor="{StaticResource PrimaryLight}"
+                           LineBreakMode="WordWrap" />
+                    <Label Text="{Binding StatusMessage}"
                            FontSize="14"
-                           TextColor="{DynamicResource TextSecondary}" />
+                           TextColor="White"
+                           LineBreakMode="WordWrap"
+                           Margin="0,4,0,0" />
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Padding="20" CornerRadius="16" BackgroundColor="{DynamicResource Surface}" BorderColor="{StaticResource PrimaryLight}">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Address (optional)"
+            <!-- Coordinates grid -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowSpacing="12">
+                <Frame Grid.Column="0"
+                       Padding="16"
+                       CornerRadius="14"
+                       BackgroundColor="{DynamicResource Surface}"
+                       BorderColor="{StaticResource PrimaryLight}"
+                       HasShadow="True">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Latitude"
+                               FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" />
+                        <Label Text="{Binding LatitudeText}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               FontFamily="OpenSansSemibold"
+                               TextColor="{StaticResource PrimaryDark}"
+                               LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Column="1"
+                       Padding="16"
+                       CornerRadius="14"
+                       BackgroundColor="{DynamicResource Surface}"
+                       BorderColor="{StaticResource PrimaryLight}"
+                       HasShadow="True">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Longitude"
+                               FontSize="13"
+                               TextColor="{DynamicResource TextSecondary}" />
+                        <Label Text="{Binding LongitudeText}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               FontFamily="OpenSansSemibold"
+                               TextColor="{StaticResource PrimaryDark}"
+                               LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <Label Text="{Binding AccuracyText}"
+                   FontSize="14"
+                   TextColor="{DynamicResource TextSecondary}"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding HasLocation}" />
+
+            <Label Text="{Binding LastUpdatedText}"
+                   FontSize="13"
+                   TextColor="{DynamicResource TextSecondary}"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding HasLocation}" />
+
+            <!-- Address card -->
+            <Frame Padding="20"
+                   CornerRadius="16"
+                   BackgroundColor="{DynamicResource Surface}"
+                   BorderColor="{StaticResource PrimaryLight}"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="🗺 Address"
                            FontSize="{DynamicResource FontSizeSubtitle}"
                            FontAttributes="Bold"
-                           TextColor="{StaticResource PrimaryDark}" />
+                           TextColor="{StaticResource PrimaryDark}"
+                           SemanticProperties.HeadingLevel="Level2" />
                     <Label Text="{Binding AddressText}"
                            FontSize="{DynamicResource FontSizeBody}"
+                           TextColor="{DynamicResource TextPrimary}"
+                           LineBreakMode="WordWrap" />
+                    <Label Text="Reverse geocoding is optional — latitude and longitude are the primary result."
+                           FontSize="12"
+                           TextColor="{DynamicResource TextSecondary}"
                            LineBreakMode="WordWrap" />
                 </VerticalStackLayout>
             </Frame>
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Primary}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource Primary}"
+                               HeightRequest="32" />
 
-            <Button Text="Get Current Location"
+            <Button Text="📍 Get Current Location"
                     Command="{Binding GetLocationCommand}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="White"
-                    FontSize="{DynamicResource FontSizeBody}"
+                    FontSize="18"
                     HeightRequest="56"
                     CornerRadius="12"
                     SemanticProperties.Description="Get current GPS location" />
+
+            <Button Text="📋 Copy Coordinates"
+                    Command="{Binding CopyCoordinatesCommand}"
+                    IsVisible="{Binding HasLocation}"
+                    BackgroundColor="{DynamicResource Surface}"
+                    TextColor="{DynamicResource TextPrimary}"
+                    BorderColor="{StaticResource Primary}"
+                    BorderWidth="2"
+                    FontSize="16"
+                    HeightRequest="48"
+                    CornerRadius="10"
+                    SemanticProperties.Description="Copy latitude and longitude to clipboard" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

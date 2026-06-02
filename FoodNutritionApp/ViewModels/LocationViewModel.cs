@@ -5,22 +5,34 @@ namespace FoodNutritionApp.ViewModels;
 
 public partial class LocationViewModel : BaseViewModel
 {
-    [ObservableProperty]
-    private string _latitudeText = "—";
+    private const string EmptyCoordinate = "—";
 
     [ObservableProperty]
-    private string _longitudeText = "—";
+    [NotifyPropertyChangedFor(nameof(HasLocation))]
+    [NotifyCanExecuteChangedFor(nameof(CopyCoordinatesCommand))]
+    private string _latitudeText = EmptyCoordinate;
 
     [ObservableProperty]
-    private string _addressText = "Address not loaded yet.";
+    [NotifyPropertyChangedFor(nameof(HasLocation))]
+    [NotifyCanExecuteChangedFor(nameof(CopyCoordinatesCommand))]
+    private string _longitudeText = EmptyCoordinate;
+
+    [ObservableProperty]
+    private string _addressText = "Address will appear after you load GPS data.";
 
     [ObservableProperty]
     private string _accuracyText = string.Empty;
 
+    [ObservableProperty]
+    private string _lastUpdatedText = string.Empty;
+
+    public bool HasLocation =>
+        LatitudeText != EmptyCoordinate && LongitudeText != EmptyCoordinate;
+
     public LocationViewModel()
     {
         Title = "Location";
-        StatusMessage = "Tap the button to read GPS coordinates from this device.";
+        StatusMessage = "Tap the button below to read GPS coordinates from this device.";
     }
 
     [RelayCommand]
@@ -60,8 +72,9 @@ public partial class LocationViewModel : BaseViewModel
             LatitudeText = location.Latitude.ToString("F6");
             LongitudeText = location.Longitude.ToString("F6");
             AccuracyText = location.Accuracy.HasValue
-                ? $"Accuracy: {location.Accuracy:F1} metres"
+                ? $"Accuracy: ±{location.Accuracy:F1} metres"
                 : string.Empty;
+            LastUpdatedText = $"Last updated: {DateTime.Now:g}";
 
             await ResolveAddressAsync(location);
             StatusMessage = "Location updated successfully.";
@@ -83,6 +96,20 @@ public partial class LocationViewModel : BaseViewModel
             IsBusy = false;
         }
     }
+
+    [RelayCommand(CanExecute = nameof(CanCopyCoordinates))]
+    private async Task CopyCoordinatesAsync()
+    {
+        if (!HasLocation)
+        {
+            return;
+        }
+
+        await Clipboard.Default.SetTextAsync($"{LatitudeText}, {LongitudeText}");
+        StatusMessage = "Coordinates copied to clipboard.";
+    }
+
+    private bool CanCopyCoordinates() => HasLocation;
 
     private async Task ResolveAddressAsync(Location location)
     {
