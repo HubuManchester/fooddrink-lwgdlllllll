@@ -29,14 +29,18 @@ public static class MauiProgram
 
 #if WINDOWS
         builder.Services.AddSingleton<ISpeechPlaybackService, Platforms.Windows.WindowsSpeechPlaybackService>();
+#elif ANDROID
+        builder.Services.AddSingleton<ISpeechPlaybackService, Platforms.Android.AndroidSpeechPlaybackService>();
 #else
         builder.Services.AddSingleton<ISpeechPlaybackService, MauiTextToSpeechPlaybackService>();
 #endif
 
 #if ANDROID
         builder.Services.AddSingleton<ILightSensorService, Platforms.Android.AndroidLightSensorService>();
+        builder.Services.AddSingleton<ISpeechRecognitionService, Platforms.Android.AndroidSpeechRecognitionService>();
 #else
         builder.Services.AddSingleton<ILightSensorService, DefaultLightSensorService>();
+        builder.Services.AddSingleton<ISpeechRecognitionService, MauiSpeechRecognitionService>();
 #endif
 
         builder.Services.AddTransient<MainViewModel>();

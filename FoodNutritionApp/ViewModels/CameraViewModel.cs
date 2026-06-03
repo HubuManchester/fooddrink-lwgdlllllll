@@ -50,6 +50,18 @@ public partial class CameraViewModel : BaseViewModel
                 return;
             }
 
+            var cameraStatus = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            if (cameraStatus != PermissionStatus.Granted)
+            {
+                cameraStatus = await Permissions.RequestAsync<Permissions.Camera>();
+            }
+
+            if (cameraStatus != PermissionStatus.Granted)
+            {
+                StatusMessage = "Camera permission was denied. Open Settings → Apps → FoodNutritionApp → Permissions → allow Camera.";
+                return;
+            }
+
             var lightLevel = await _lightSensorService.GetLightLevelAsync();
             LightLevelText = $"Ambient light: {lightLevel:F0} lux";
 

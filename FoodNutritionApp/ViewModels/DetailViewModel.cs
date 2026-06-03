@@ -41,8 +41,14 @@ public partial class DetailViewModel : BaseViewModel
     [RelayCommand]
     private async Task StartReadingAsync()
     {
-        if (IsSpeaking || _speech.IsSpeaking || string.IsNullOrWhiteSpace(FoodItem.Name))
+        if (IsSpeaking || _speech.IsSpeaking)
         {
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(FoodItem.Name))
+        {
+            StatusMessage = "No food data to read. Open a food item from search or the food list first.";
             return;
         }
 
@@ -58,9 +64,17 @@ public partial class DetailViewModel : BaseViewModel
                 StatusMessage = "Finished reading.";
             }
         }
+        catch (OperationCanceledException)
+        {
+            StatusMessage = "Reading stopped.";
+        }
         catch (Exception ex)
         {
-            StatusMessage = $"Text-to-speech is unavailable: {ex.Message}";
+            StatusMessage = ex.Message.Contains("TTS", StringComparison.OrdinalIgnoreCase)
+                || ex.Message.Contains("Text to Speech", StringComparison.OrdinalIgnoreCase)
+                || ex.Message.Contains("Text-to-speech", StringComparison.OrdinalIgnoreCase)
+                ? "Text-to-speech failed. Open Settings → System → Text-to-speech, select Google Text-to-speech, install English voice data, tap Listen to test, then raise Media volume."
+                : $"Text-to-speech failed: {ex.Message}. Check Media volume and Text-to-speech in system settings.";
         }
         finally
         {

@@ -22,8 +22,6 @@ public class MockNutritionApi : INutritionApi
         ["broccoli"] = new() { Name = "Broccoli", Category = "Vegetable", Calories = 34, Protein = 2.8, Fat = 0.4, Carbohydrates = 7, Fiber = 2.6, ServingSize = "100g" },
         ["pizza"] = new() { Name = "Cheese Pizza", Category = "Other", Calories = 266, Protein = 11, Fat = 10, Carbohydrates = 33, Fiber = 2.3, ServingSize = "100g" },
         ["burger"] = new() { Name = "Beef Burger", Category = "Other", Calories = 295, Protein = 17, Fat = 14, Carbohydrates = 24, Fiber = 1.5, ServingSize = "100g" },
-        ["苹果"] = new() { Name = "Apple (苹果)", Category = "Fruit", Calories = 52, Protein = 0.3, Fat = 0.2, Carbohydrates = 14, Fiber = 2.4, ServingSize = "100g" },
-        ["香蕉"] = new() { Name = "Banana (香蕉)", Category = "Fruit", Calories = 89, Protein = 1.1, Fat = 0.3, Carbohydrates = 23, Fiber = 2.6, ServingSize = "100g" },
         ["noodles"] = new() { Name = "Noodles", Category = "Grain", Calories = 138, Protein = 4.5, Fat = 2.1, Carbohydrates = 25, Fiber = 1.2, ServingSize = "100g" },
         ["pasta"] = new() { Name = "Pasta", Category = "Grain", Calories = 131, Protein = 5, Fat = 1.1, Carbohydrates = 25, Fiber = 1.8, ServingSize = "100g" },
         ["coffee"] = new() { Name = "Black Coffee", Category = "Drink", Calories = 2, Protein = 0.3, Fat = 0, Carbohydrates = 0, Fiber = 0, ServingSize = "100ml" },

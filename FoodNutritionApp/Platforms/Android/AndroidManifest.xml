@@ -9,8 +9,30 @@
 	<uses-permission android:name="android.permission.FLASHLIGHT" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<!-- Android 13+ media access when saving/picking photos -->
+	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 	<uses-feature android:name="android.hardware.camera" android:required="false" />
+	<uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
 	<uses-feature android:name="android.hardware.microphone" android:required="false" />
 	<uses-feature android:name="android.hardware.location" android:required="false" />
 	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
+	<!-- Android 11+: allow launching camera and speech recognition services -->
+	<queries>
+		<intent>
+			<action android:name="android.media.action.IMAGE_CAPTURE" />
+		</intent>
+		<intent>
+			<action android:name="android.speech.RecognitionService" />
+		</intent>
+		<intent>
+			<action android:name="android.speech.action.RECOGNIZE_SPEECH" />
+		</intent>
+		<intent>
+			<action android:name="android.intent.action.TTS_SERVICE" />
+		</intent>
+		<package android:name="com.google.android.googlequicksearchbox" />
+		<package android:name="com.google.android.tts" />
+	</queries>
 </manifest>

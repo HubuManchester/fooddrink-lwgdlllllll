@@ -1,5 +1,3 @@
-using System.Globalization;
-using CommunityToolkit.Maui.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FoodNutritionApp.Models;
@@ -11,6 +9,7 @@ public partial class SearchViewModel : BaseViewModel
 {
     private readonly INutritionApi _nutritionApi;
     private readonly DatabaseService _databaseService;
+    private readonly ISpeechRecognitionService _speechRecognition;
 
     [ObservableProperty]
     private string _searchText = string.Empty;
@@ -18,12 +17,21 @@ public partial class SearchViewModel : BaseViewModel
     [ObservableProperty]
     private string _validationMessage = string.Empty;
 
-    public SearchViewModel(INutritionApi nutritionApi, DatabaseService databaseService)
+    [ObservableProperty]
+    private bool _isListening;
+
+    public SearchViewModel(
+        INutritionApi nutritionApi,
+        DatabaseService databaseService,
+        ISpeechRecognitionService speechRecognition)
     {
         _nutritionApi = nutritionApi;
         _databaseService = databaseService;
+        _speechRecognition = speechRecognition;
         Title = "Search Food";
     }
+
+    partial void OnIsListeningChanged(bool value) => VoiceInputCommand.NotifyCanExecuteChanged();
 
     [RelayCommand]
     private async Task SearchAsync()
@@ -49,6 +57,7 @@ public partial class SearchViewModel : BaseViewModel
         }
 
         IsBusy = true;
+        VoiceInputCommand.NotifyCanExecuteChanged();
 
         try
         {
@@ -80,106 +89,61 @@ public partial class SearchViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            VoiceInputCommand.NotifyCanExecuteChanged();
         }
     }
 
-    [RelayCommand]
+    private bool CanUseVoiceInput => !IsBusy && !IsListening;
+
+    [RelayCommand(CanExecute = nameof(CanUseVoiceInput))]
     private async Task VoiceInputAsync()
     {
+        if (IsBusy || IsListening)
+        {
+            return;
+        }
+
         ValidationMessage = string.Empty;
-        StatusMessage = "Listening... Say a food name such as apple or banana.";
+        IsListening = true;
+        StatusMessage = "Checking microphone permission...";
 
         try
         {
-            var isGranted = await SpeechToText.Default.RequestPermissions(CancellationToken.None);
-            if (!isGranted)
+            if (!await SpeechPermissionHelper.EnsureMicrophoneAsync())
             {
-                StatusMessage = "Microphone permission is required for voice input.";
+                StatusMessage = "Microphone permission denied. Open Settings → Apps → FoodNutritionApp → Permissions → Microphone.";
                 return;
             }
 
-            var recognizedText = await ListenForSpeechAsync();
+            StatusMessage = "Listening... Say a food name in English (e.g. apple, rice). A system speech dialog will open.";
+
+            var recognizedText = await _speechRecognition.RecognizeFoodNameAsync(CancellationToken.None);
             if (string.IsNullOrWhiteSpace(recognizedText))
             {
-                StatusMessage = "No speech detected. Please try again.";
+                StatusMessage = "No speech recognized. Install or update Google and Speech Services by Google, stay online, and try saying \"apple\" in English.";
                 return;
             }
 
-            SearchText = recognizedText;
-            StatusMessage = $"Recognized: {recognizedText}";
+            SearchText = recognizedText.Trim();
+            StatusMessage = $"Recognized: {SearchText}";
             await SearchAsync();
         }
         catch (FeatureNotSupportedException)
         {
-            StatusMessage = "Speech recognition is not supported on this device.";
+            StatusMessage = "Speech recognition is not available on this device. Install the Google app and Speech Services by Google, then enable them in system settings.";
         }
         catch (PermissionException)
         {
-            StatusMessage = "Microphone permission was denied.";
+            StatusMessage = "Speech recognition permission was denied. Allow microphone access for this app.";
         }
         catch (Exception ex)
         {
             StatusMessage = $"Voice input failed: {ex.Message}";
         }
-    }
-
-    private static async Task<string?> ListenForSpeechAsync()
-    {
-        var tcs = new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        void OnCompleted(object? sender, SpeechToTextRecognitionResultCompletedEventArgs e)
-        {
-            Cleanup();
-            tcs.TrySetResult(e.RecognitionResult?.Text);
-        }
-
-        void OnUpdated(object? sender, SpeechToTextRecognitionResultUpdatedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(e.RecognitionResult))
-            {
-                Cleanup();
-                tcs.TrySetResult(e.RecognitionResult);
-            }
-        }
-
-        void Cleanup()
-        {
-            SpeechToText.Default.RecognitionResultCompleted -= OnCompleted;
-            SpeechToText.Default.RecognitionResultUpdated -= OnUpdated;
-        }
-
-        SpeechToText.Default.RecognitionResultCompleted += OnCompleted;
-        SpeechToText.Default.RecognitionResultUpdated += OnUpdated;
-
-        try
-        {
-            var options = new SpeechToTextOptions
-            {
-                Culture = CultureInfo.CurrentCulture
-            };
-
-            await SpeechToText.Default.StartListenAsync(options, CancellationToken.None);
-
-            var completedTask = await Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(12)));
-            if (completedTask != tcs.Task)
-            {
-                return null;
-            }
-
-            return await tcs.Task;
-        }
         finally
         {
-            Cleanup();
-
-            try
-            {
-                await SpeechToText.Default.StopListenAsync(CancellationToken.None);
-            }
-            catch
-            {
-                // Ignore stop errors when recognition already ended.
-            }
+            IsListening = false;
+            VoiceInputCommand.NotifyCanExecuteChanged();
         }
     }
 }

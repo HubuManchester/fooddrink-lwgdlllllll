@@ -42,6 +42,10 @@
                                IsVisible="{Binding IsBusy}"
                                Color="{StaticResource Primary}" />
 
+            <ActivityIndicator IsRunning="{Binding IsListening}"
+                               IsVisible="{Binding IsListening}"
+                               Color="{StaticResource Accent}" />
+
             <Button Text="Search Nutrition"
                     Command="{Binding SearchCommand}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"

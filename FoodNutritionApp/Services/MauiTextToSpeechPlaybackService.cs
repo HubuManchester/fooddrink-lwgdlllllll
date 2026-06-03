@@ -1,7 +1,9 @@
+using System.Globalization;
+
 namespace FoodNutritionApp.Services;
 
 /// <summary>
-/// Speech via MAUI TextToSpeech (Android / iOS / Mac). Stop uses CancellationToken only.
+/// Text-to-speech via MAUI (Android / iOS). Runs on main thread for device compatibility.
 /// </summary>
 public sealed class MauiTextToSpeechPlaybackService : ISpeechPlaybackService
 {
@@ -12,6 +14,11 @@ public sealed class MauiTextToSpeechPlaybackService : ISpeechPlaybackService
 
     public async Task SpeakAsync(string text, CancellationToken cancellationToken = default)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            throw new InvalidOperationException("No text to speak.");
+        }
+
         CancellationToken token;
         lock (_lock)
         {
@@ -24,24 +31,25 @@ public sealed class MauiTextToSpeechPlaybackService : ISpeechPlaybackService
 
         try
         {
-            var locales = await TextToSpeech.Default.GetLocalesAsync();
             token.ThrowIfCancellationRequested();
 
-            var locale = locales.FirstOrDefault(l => l.Language.StartsWith("en", StringComparison.OrdinalIgnoreCase))
-                         ?? locales.FirstOrDefault();
-
-            var options = new SpeechOptions
+            await MainThread.InvokeOnMainThreadAsync(async () =>
             {
-                Pitch = 1.0f,
-                Volume = 1.0f,
-                Locale = locale
-            };
-
-            await TextToSpeech.Default.SpeakAsync(text, options, token);
+                // First try with best locale; if that fails, speak with system default.
+                try
+                {
+                    var options = await BuildSpeechOptionsAsync();
+                    await TextToSpeech.Default.SpeakAsync(text, options, token);
+                }
+                catch (Exception) when (!token.IsCancellationRequested)
+                {
+                    await TextToSpeech.Default.SpeakAsync(text, cancelToken: token);
+                }
+            });
         }
         catch (OperationCanceledException)
         {
-            // Expected when Stop() is called.
+            // User tapped Stop.
         }
         finally
         {
@@ -63,6 +71,43 @@ public sealed class MauiTextToSpeechPlaybackService : ISpeechPlaybackService
         }
 
         IsSpeaking = false;
+    }
+
+    private static async Task<SpeechOptions> BuildSpeechOptionsAsync()
+    {
+        var options = new SpeechOptions
+        {
+            Pitch = 1.0f,
+            Volume = 1.0f
+        };
+
+        try
+        {
+            var locales = await TextToSpeech.Default.GetLocalesAsync();
+            if (locales == null || !locales.Any())
+            {
+                return options;
+            }
+
+            var locale =
+                locales.FirstOrDefault(l => l.Language.Equals("en", StringComparison.OrdinalIgnoreCase))
+                ?? locales.FirstOrDefault(l => l.Language.StartsWith("en", StringComparison.OrdinalIgnoreCase))
+                ?? locales.FirstOrDefault(l =>
+                    l.Language.StartsWith(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName,
+                        StringComparison.OrdinalIgnoreCase))
+                ?? locales.FirstOrDefault();
+
+            if (locale != null)
+            {
+                options.Locale = locale;
+            }
+        }
+        catch
+        {
+            // Use default engine voice.
+        }
+
+        return options;
     }
 
     private void CancelLocked()

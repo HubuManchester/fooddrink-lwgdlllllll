@@ -1,0 +1,87 @@
+<api>
+  <jcw-types>
+    <type name="MainActivity" package="crc64af2a8777c2dbf9a0" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="crc6488302ad6e9e4df1a.MauiAppCompatActivity" partial_assembly_qualified_name="FoodNutritionApp.MainActivity, FoodNutritionApp">
+      <constructors>
+        <constructor name="MainActivity" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="MainActivity" method="n_.ctor:(I)V:" jni_signature="(I)V" managed_parameters="System.Int32, System.Private.CoreLib" params="int p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </constructors>
+    </type>
+    <type name="MainApplication" package="crc64af2a8777c2dbf9a0" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="crc6488302ad6e9e4df1a.MauiApplication" is_application="True" partial_assembly_qualified_name="FoodNutritionApp.MainApplication, FoodNutritionApp" application_constructor="MainApplication" />
+    <type name="AndroidLightSensorService_LightSensorListener" package="crc645759c937ba45c653" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="FoodNutritionApp.Platforms.Android.AndroidLightSensorService+LightSensorListener, FoodNutritionApp">
+      <implemented_interfaces>
+        <interface name="android.hardware.SensorEventListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AndroidLightSensorService_LightSensorListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onAccuracyChanged" method="n_onAccuracyChanged:(Landroid/hardware/Sensor;I)V:GetOnAccuracyChanged_Landroid_hardware_Sensor_IHandler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/Sensor;I)V" params="android.hardware.Sensor p0, int p1" retval="void" is_dynamically_registered="True" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onSensorChanged" method="n_onSensorChanged:(Landroid/hardware/SensorEvent;)V:GetOnSensorChanged_Landroid_hardware_SensorEvent_Handler:Android.Hardware.ISensorEventListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/hardware/SensorEvent;)V" params="android.hardware.SensorEvent p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="AndroidSpeechPlaybackService" package="crc645759c937ba45c653" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService, FoodNutritionApp">
+      <implemented_interfaces>
+        <interface name="android.speech.tts.TextToSpeech.OnInitListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AndroidSpeechPlaybackService" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onInit" method="n_onInit:(I)V:GetOnInit_IHandler:Android.Speech.Tts.TextToSpeech+IOnInitListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(I)V" params="int p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="AndroidSpeechPlaybackService_UtteranceListener" package="crc645759c937ba45c653" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.speech.tts.UtteranceProgressListener" partial_assembly_qualified_name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService+UtteranceListener, FoodNutritionApp">
+      <constructors>
+        <constructor name="AndroidSpeechPlaybackService_UtteranceListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onStart" method="n_onStart:(Ljava/lang/String;)V:GetOnStart_Ljava_lang_String_Handler" jni_signature="(Ljava/lang/String;)V" params="java.lang.String p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onDone" method="n_onDone:(Ljava/lang/String;)V:GetOnDone_Ljava_lang_String_Handler" jni_signature="(Ljava/lang/String;)V" params="java.lang.String p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onError" method="n_onError:(Ljava/lang/String;)V:GetOnError_Ljava_lang_String_Handler" jni_signature="(Ljava/lang/String;)V" params="java.lang.String p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onError" method="n_onError:(Ljava/lang/String;I)V:GetOnError_Ljava_lang_String_IHandler" jni_signature="(Ljava/lang/String;I)V" params="java.lang.String p0, int p1" retval="void" is_dynamically_registered="True" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="AndroidSpeechRecognitionService_ActivityResultCallback" package="crc645759c937ba45c653" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+ActivityResultCallback, FoodNutritionApp">
+      <implemented_interfaces>
+        <interface name="androidx.activity.result.ActivityResultCallback" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AndroidSpeechRecognitionService_ActivityResultCallback" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onActivityResult" method="n_onActivityResult:(Ljava/lang/Object;)V:GetOnActivityResult_Ljava_lang_Object_Handler:AndroidX.Activity.Result.IActivityResultCallbackInvoker, Xamarin.AndroidX.Activity" jni_signature="(Ljava/lang/Object;)V" params="java.lang.Object p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+    <type name="AndroidSpeechRecognitionService_SpeechListener" package="crc645759c937ba45c653" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+SpeechListener, FoodNutritionApp">
+      <implemented_interfaces>
+        <interface name="android.speech.RecognitionListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AndroidSpeechRecognitionService_SpeechListener" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onBeginningOfSpeech" method="n_onBeginningOfSpeech:()V:GetOnBeginningOfSpeechHandler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onBufferReceived" method="n_onBufferReceived:([B)V:GetOnBufferReceived_arrayBHandler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="([B)V" params="byte[] p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onEndOfSpeech" method="n_onEndOfSpeech:()V:GetOnEndOfSpeechHandler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onError" method="n_onError:(I)V:GetOnError_IHandler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(I)V" params="int p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onEvent" method="n_onEvent:(ILandroid/os/Bundle;)V:GetOnEvent_ILandroid_os_Bundle_Handler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(ILandroid/os/Bundle;)V" params="int p0, android.os.Bundle p1" retval="void" is_dynamically_registered="True" super_call="p0, p1" activate_call="p0, p1" />
+        <method name="onPartialResults" method="n_onPartialResults:(Landroid/os/Bundle;)V:GetOnPartialResults_Landroid_os_Bundle_Handler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onReadyForSpeech" method="n_onReadyForSpeech:(Landroid/os/Bundle;)V:GetOnReadyForSpeech_Landroid_os_Bundle_Handler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onResults" method="n_onResults:(Landroid/os/Bundle;)V:GetOnResults_Landroid_os_Bundle_Handler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onRmsChanged" method="n_onRmsChanged:(F)V:GetOnRmsChanged_FHandler:Android.Speech.IRecognitionListenerInvoker, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(F)V" params="float p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onEndOfSegmentedSession" method="n_onEndOfSegmentedSession:()V:GetOnEndOfSegmentedSessionHandler:Android.Speech.IRecognitionListener, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="()V" retval="void" is_dynamically_registered="True" />
+        <method name="onLanguageDetection" method="n_onLanguageDetection:(Landroid/os/Bundle;)V:GetOnLanguageDetection_Landroid_os_Bundle_Handler:Android.Speech.IRecognitionListener, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+        <method name="onSegmentResults" method="n_onSegmentResults:(Landroid/os/Bundle;)V:GetOnSegmentResults_Landroid_os_Bundle_Handler:Android.Speech.IRecognitionListener, Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" jni_signature="(Landroid/os/Bundle;)V" params="android.os.Bundle p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="FoodNutritionApp" module-name="FoodNutritionApp.dll">
+    <type assembly-qualified-name="FoodNutritionApp.MainActivity, FoodNutritionApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="foodnutritionapp.MainActivity" java-key="crc64af2a8777c2dbf9a0.MainActivity" managed-key="FoodNutritionApp.MainActivity" partial-assembly-qualified-name="FoodNutritionApp.MainActivity, FoodNutritionApp" />
+    <type assembly-qualified-name="FoodNutritionApp.MainApplication, FoodNutritionApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="foodnutritionapp.MainApplication" java-key="crc64af2a8777c2dbf9a0.MainApplication" managed-key="FoodNutritionApp.MainApplication" partial-assembly-qualified-name="FoodNutritionApp.MainApplication, FoodNutritionApp" />
+    <type assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidLightSensorService+LightSensorListener, FoodNutritionApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="foodnutritionapp.platforms.android.AndroidLightSensorService_LightSensorListener" java-key="crc645759c937ba45c653.AndroidLightSensorService_LightSensorListener" managed-key="FoodNutritionApp.Platforms.Android.AndroidLightSensorService.LightSensorListener" partial-assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidLightSensorService+LightSensorListener, FoodNutritionApp" />
+    <type assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService, FoodNutritionApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="foodnutritionapp.platforms.android.AndroidSpeechPlaybackService" java-key="crc645759c937ba45c653.AndroidSpeechPlaybackService" managed-key="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService" partial-assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService, FoodNutritionApp" />
+    <type assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService+UtteranceListener, FoodNutritionApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="foodnutritionapp.platforms.android.AndroidSpeechPlaybackService_UtteranceListener" java-key="crc645759c937ba45c653.AndroidSpeechPlaybackService_UtteranceListener" managed-key="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService.UtteranceListener" partial-assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService+UtteranceListener, FoodNutritionApp" />
+    <type assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+ActivityResultCallback, FoodNutritionApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="foodnutritionapp.platforms.android.AndroidSpeechRecognitionService_ActivityResultCallback" java-key="crc645759c937ba45c653.AndroidSpeechRecognitionService_ActivityResultCallback" managed-key="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService.ActivityResultCallback" partial-assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+ActivityResultCallback, FoodNutritionApp" />
+    <type assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+SpeechListener, FoodNutritionApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="foodnutritionapp.platforms.android.AndroidSpeechRecognitionService_SpeechListener" java-key="crc645759c937ba45c653.AndroidSpeechRecognitionService_SpeechListener" managed-key="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService.SpeechListener" partial-assembly-qualified-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+SpeechListener, FoodNutritionApp" />
+  </acw-types>
+</api>

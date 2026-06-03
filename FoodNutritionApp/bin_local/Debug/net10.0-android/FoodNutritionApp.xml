@@ -1,0 +1,756 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FoodNutritionApp</name>
+    </assembly>
+    <members>
+        <member name="T:FoodNutritionApp.Converters.InvertedBoolConverter">
+            <summary>
+            Inverts boolean values for IsEnabled bindings.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Converters.StringNotEmptyConverter">
+            <summary>
+            Returns true when a string is not null or whitespace.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Models.FoodCategories">
+            <summary>
+            Food category constants used for filtering and classification.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Models.FoodItem">
+            <summary>
+            Represents nutritional information for a food item returned from the API.
+            </summary>
+        </member>
+        <member name="M:FoodNutritionApp.Models.FoodItem.ToSpeechSummary">
+            <summary>
+            Builds a spoken summary for text-to-speech accessibility.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Models.HistoryRecord">
+            <summary>
+            SQLite entity for saved scan and search history.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Platforms.Android.AndroidLightSensorService">
+            <summary>
+            Android ambient light sensor used to trigger flashlight in dark environments.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService">
+            <summary>
+            Android native TTS with explicit engine init (avoids MAUI "Failed to initialize Text to Speech engine").
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService">
+            <summary>
+            Uses the system speech UI (RecognizerIntent) first, then in-app SpeechRecognizer — more reliable on real devices.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.AppSettingsService">
+            <summary>
+            Persists theme and font scale preferences and applies them app-wide.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.DatabaseService">
+            <summary>
+            SQLite persistence for scan and search history records.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.DefaultLightSensorService">
+            <summary>
+            Default light sensor implementation for platforms without a dedicated sensor API.
+            Returns a moderate light level so flash auto-enable can be demonstrated manually.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.HybridNutritionApi">
+            <summary>
+            Nutrition lookup chain: bundled local data → USDA API → mock API fallback.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.ILightSensorService">
+            <summary>
+            Reads ambient light level from the device sensor when available.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.INutritionApi">
+            <summary>
+            Contract for fetching food nutrition data from a remote or mock source.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.ISpeechPlaybackService">
+            <summary>
+            Cross-platform speech playback with reliable stop support (especially on Windows).
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.ISpeechRecognitionService">
+            <summary>
+            Speech-to-text for food name search (voice input).
+            </summary>
+        </member>
+        <member name="M:FoodNutritionApp.Services.ISpeechRecognitionService.RecognizeFoodNameAsync(System.Threading.CancellationToken)">
+            <summary>
+            Returns recognized text, or null if nothing was heard / user cancelled.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.LocalFirstNutritionApi">
+            <summary>
+            Dual-insurance data strategy: local bundled data first, mock API second.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.LocalFoodDataService">
+            <summary>
+            Loads bundled local JSON food data — queried before any remote mock API.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.MauiSpeechRecognitionService">
+            <summary>
+            Speech recognition via CommunityToolkit (iOS / fallback).
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.MauiTextToSpeechPlaybackService">
+            <summary>
+            Text-to-speech via MAUI (Android / iOS). Runs on main thread for device compatibility.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.MockNutritionApi">
+            <summary>
+            Mock nutrition API with predefined foods for development and emulator testing.
+            Simulates OCR/vision by mapping image hash to a food name.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.RealNutritionApi">
+            <summary>
+            USDA FoodData Central search. Returns null when offline or no match (caller uses mock fallback).
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.Services.SpeechPermissionHelper">
+            <summary>
+            Ensures microphone permission for speech-to-text on Android and other platforms.
+            </summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.BaseViewModel">
+            <summary>
+            Base class for all ViewModels with busy state and title support.
+            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.BaseViewModel.IsBusy">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.BaseViewModel._isBusy"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.BaseViewModel.Title">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.BaseViewModel._title"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.BaseViewModel.StatusMessage">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.BaseViewModel._statusMessage"/>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.CameraViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.CameraViewModel.CapturedImage">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.CameraViewModel._capturedImage"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.CameraViewModel.LightLevelText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.CameraViewModel._lightLevelText"/>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.CameraViewModel.captureAndRecognizeCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.CameraViewModel.CaptureAndRecognizeCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.CameraViewModel.CaptureAndRecognizeCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.CameraViewModel.CaptureAndRecognizeAsync"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.DetailViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="M:FoodNutritionApp.ViewModels.DetailViewModel.StopReading">
+            <summary>
+            Synchronous stop — can run while <see cref="M:FoodNutritionApp.ViewModels.DetailViewModel.StartReadingAsync"/> is still awaiting.
+            </summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.DetailViewModel.FoodItem">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.DetailViewModel._foodItem"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.DetailViewModel.IsSpeaking">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.DetailViewModel._isSpeaking"/>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.DetailViewModel.stopReadingCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.DetailViewModel.StopReadingCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.DetailViewModel.StopReadingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.DetailViewModel.StopReading"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.DetailViewModel.startReadingCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.DetailViewModel.StartReadingCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.DetailViewModel.StartReadingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.DetailViewModel.StartReadingAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.DetailViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.DetailViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.DetailViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.DetailViewModel.GoBackAsync"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.EditRecordViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.RecordId">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._recordId"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.FoodName">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._foodName"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.SelectedCategory">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._selectedCategory"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.CaloriesText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._caloriesText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.ProteinText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._proteinText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.FatText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._fatText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.CarbohydratesText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._carbohydratesText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.FiberText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._fiberText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.ServingSize">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._servingSize"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.ValidationMessage">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.EditRecordViewModel._validationMessage"/>
+        </member>
+        <member name="M:FoodNutritionApp.ViewModels.EditRecordViewModel.OnRecordIdChanged(System.Int32)">
+            <summary>Executes the logic for when <see cref="P:FoodNutritionApp.ViewModels.EditRecordViewModel.RecordId"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:FoodNutritionApp.ViewModels.EditRecordViewModel.RecordId"/> is changed.</remarks>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.EditRecordViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.EditRecordViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.EditRecordViewModel.SaveAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.EditRecordViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.EditRecordViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.EditRecordViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.EditRecordViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.HistoryViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.HistoryViewModel.Records">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.HistoryViewModel._records"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.HistoryViewModel.SelectedCategory">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.HistoryViewModel._selectedCategory"/>
+        </member>
+        <member name="M:FoodNutritionApp.ViewModels.HistoryViewModel.OnSelectedCategoryChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:FoodNutritionApp.ViewModels.HistoryViewModel.SelectedCategory"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:FoodNutritionApp.ViewModels.HistoryViewModel.SelectedCategory"/> is changed.</remarks>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.HistoryViewModel.refreshCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.HistoryViewModel.RefreshCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.HistoryViewModel.RefreshCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.HistoryViewModel.RefreshAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.HistoryViewModel.openRecordCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.HistoryViewModel.OpenRecordCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.HistoryViewModel.OpenRecordCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.HistoryViewModel.OpenRecordAsync(FoodNutritionApp.Models.HistoryRecord)"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.HistoryViewModel.editRecordCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.HistoryViewModel.EditRecordCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.HistoryViewModel.EditRecordCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.HistoryViewModel.EditRecordAsync(FoodNutritionApp.Models.HistoryRecord)"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.HistoryViewModel.deleteRecordCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.HistoryViewModel.DeleteRecordCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.HistoryViewModel.DeleteRecordCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.HistoryViewModel.DeleteRecordAsync(FoodNutritionApp.Models.HistoryRecord)"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.HistoryViewModel.clearAllCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.HistoryViewModel.ClearAllCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.HistoryViewModel.ClearAllCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.HistoryViewModel.ClearAllAsync"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.LocationViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.LocationViewModel.LatitudeText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.LocationViewModel._latitudeText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.LocationViewModel.LongitudeText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.LocationViewModel._longitudeText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.LocationViewModel.AddressText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.LocationViewModel._addressText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.LocationViewModel.AccuracyText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.LocationViewModel._accuracyText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.LocationViewModel.LastUpdatedText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.LocationViewModel._lastUpdatedText"/>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.LocationViewModel.getLocationCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.LocationViewModel.GetLocationCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.LocationViewModel.GetLocationCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.LocationViewModel.GetLocationAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.LocationViewModel.copyCoordinatesCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.LocationViewModel.CopyCoordinatesCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.LocationViewModel.CopyCoordinatesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.LocationViewModel.CopyCoordinatesAsync"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.MainViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.MainViewModel.goToCameraCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.MainViewModel.GoToCameraCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.MainViewModel.GoToCameraCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.MainViewModel.GoToCameraAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.MainViewModel.goToSearchCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.MainViewModel.GoToSearchCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.MainViewModel.GoToSearchCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.MainViewModel.GoToSearchAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.MainViewModel.goToHistoryCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.MainViewModel.GoToHistoryCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.MainViewModel.GoToHistoryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.MainViewModel.GoToHistoryAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.MainViewModel.goToLocationCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.MainViewModel.GoToLocationCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.MainViewModel.GoToLocationCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.MainViewModel.GoToLocationAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.MainViewModel.goToSettingsCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.MainViewModel.GoToSettingsCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.MainViewModel.GoToSettingsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.MainViewModel.GoToSettingsAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.MainViewModel.goToHelpCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.MainViewModel.GoToHelpCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.MainViewModel.GoToHelpCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.MainViewModel.GoToHelpAsync"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.SearchViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SearchViewModel.SearchText">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.SearchViewModel._searchText"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SearchViewModel.ValidationMessage">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.SearchViewModel._validationMessage"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SearchViewModel.IsListening">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.SearchViewModel._isListening"/>
+        </member>
+        <member name="M:FoodNutritionApp.ViewModels.SearchViewModel.OnIsListeningChanged(System.Boolean)">
+            <summary>Executes the logic for when <see cref="P:FoodNutritionApp.ViewModels.SearchViewModel.IsListening"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:FoodNutritionApp.ViewModels.SearchViewModel.IsListening"/> is changed.</remarks>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.SearchViewModel.searchCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.SearchViewModel.SearchCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SearchViewModel.SearchCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.SearchViewModel.SearchAsync"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.SearchViewModel.voiceInputCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.SearchViewModel.VoiceInputCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SearchViewModel.VoiceInputCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.SearchViewModel.VoiceInputAsync"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.ViewModels.SettingsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectedTheme">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.SettingsViewModel._selectedTheme"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectedFontScale">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.SettingsViewModel._selectedFontScale"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectedThemeLabel">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.SettingsViewModel._selectedThemeLabel"/>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectedFontScaleLabel">
+            <inheritdoc cref="F:FoodNutritionApp.ViewModels.SettingsViewModel._selectedFontScaleLabel"/>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.SettingsViewModel.selectThemeCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectThemeCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectThemeCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.SettingsViewModel.SelectTheme(System.String)"/>.</summary>
+        </member>
+        <member name="F:FoodNutritionApp.ViewModels.SettingsViewModel.selectFontScaleCommand">
+            <summary>The backing field for <see cref="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectFontScaleCommand"/>.</summary>
+        </member>
+        <member name="P:FoodNutritionApp.ViewModels.SettingsViewModel.SelectFontScaleCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:FoodNutritionApp.ViewModels.SettingsViewModel.SelectFontScale(System.String)"/>.</summary>
+        </member>
+        <member name="T:FoodNutritionApp.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_DatePicker.TextColorTo(Microsoft.Maui.Controls.DatePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Editor.TextColorTo(Microsoft.Maui.Controls.Editor,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Entry.TextColorTo(Microsoft.Maui.Controls.Entry,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_InputView.TextColorTo(Microsoft.Maui.Controls.InputView,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Label.TextColorTo(Microsoft.Maui.Controls.Label,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Picker.TextColorTo(Microsoft.Maui.Controls.Picker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_RadioButton.TextColorTo(Microsoft.Maui.Controls.RadioButton,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_SearchBar.TextColorTo(Microsoft.Maui.Controls.SearchBar,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_TimePicker.TextColorTo(Microsoft.Maui.Controls.TimePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing,System.Threading.CancellationToken)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <param name = "token"><see cref = "T:System.Threading.CancellationToken"/></param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CapturedImage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CapturedImage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LightLevelText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LightLevelText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FoodItem">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FoodItem" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSpeaking">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSpeaking" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.RecordId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "RecordId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FoodName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FoodName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedCategory">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedCategory" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CaloriesText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CaloriesText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ProteinText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ProteinText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FatText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FatText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CarbohydratesText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CarbohydratesText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FiberText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FiberText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ServingSize">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ServingSize" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ValidationMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ValidationMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Records">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Records" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LatitudeText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LatitudeText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HasLocation">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HasLocation" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LongitudeText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LongitudeText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AddressText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AddressText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AccuracyText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AccuracyText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LastUpdatedText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LastUpdatedText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SearchText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SearchText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsListening">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsListening" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedTheme">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedTheme" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedFontScale">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedFontScale" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedThemeLabel">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedThemeLabel" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedFontScaleLabel">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedFontScaleLabel" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CapturedImage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CapturedImage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LightLevelText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LightLevelText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FoodItem">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FoodItem" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSpeaking">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSpeaking" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.RecordId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "RecordId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FoodName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FoodName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedCategory">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedCategory" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CaloriesText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CaloriesText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ProteinText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ProteinText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FatText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FatText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CarbohydratesText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CarbohydratesText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FiberText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FiberText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ServingSize">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ServingSize" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ValidationMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ValidationMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Records">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Records" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LatitudeText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LatitudeText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HasLocation">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HasLocation" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LongitudeText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LongitudeText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AddressText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AddressText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AccuracyText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AccuracyText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LastUpdatedText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LastUpdatedText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SearchText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SearchText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsListening">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsListening" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedTheme">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedTheme" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedFontScale">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedFontScale" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedThemeLabel">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedThemeLabel" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedFontScaleLabel">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedFontScaleLabel" generated properties.</summary>
+        </member>
+    </members>
+</doc>

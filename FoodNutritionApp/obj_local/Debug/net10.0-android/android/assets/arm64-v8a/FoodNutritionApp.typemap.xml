@@ -1,0 +1,20 @@
+<api type="debug" assembly-name="FoodNutritionApp" mvid="6079f173fbe54d628ccbe028fc571264">
+  <java-to-managed>
+    <entry java-name="crc64af2a8777c2dbf9a0/MainActivity" managed-name="FoodNutritionApp.MainActivity, FoodNutritionApp" managed-type-token-id="33554452" />
+    <entry java-name="crc64af2a8777c2dbf9a0/MainApplication" managed-name="FoodNutritionApp.MainApplication, FoodNutritionApp" managed-type-token-id="33554453" />
+    <entry java-name="crc645759c937ba45c653/AndroidLightSensorService_LightSensorListener" managed-name="FoodNutritionApp.Platforms.Android.AndroidLightSensorService+LightSensorListener, FoodNutritionApp" managed-type-token-id="33554620" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechPlaybackService" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService, FoodNutritionApp" managed-type-token-id="33554490" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechPlaybackService_UtteranceListener" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService+UtteranceListener, FoodNutritionApp" managed-type-token-id="33554622" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechRecognitionService_ActivityResultCallback" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+ActivityResultCallback, FoodNutritionApp" managed-type-token-id="33554631" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechRecognitionService_SpeechListener" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+SpeechListener, FoodNutritionApp" managed-type-token-id="33554632" />
+  </java-to-managed>
+  <managed-to-java>
+    <entry java-name="crc64af2a8777c2dbf9a0/MainActivity" managed-name="FoodNutritionApp.MainActivity, FoodNutritionApp" managed-type-token-id="33554452" />
+    <entry java-name="crc64af2a8777c2dbf9a0/MainApplication" managed-name="FoodNutritionApp.MainApplication, FoodNutritionApp" managed-type-token-id="33554453" />
+    <entry java-name="crc645759c937ba45c653/AndroidLightSensorService_LightSensorListener" managed-name="FoodNutritionApp.Platforms.Android.AndroidLightSensorService+LightSensorListener, FoodNutritionApp" managed-type-token-id="33554620" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechPlaybackService" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService, FoodNutritionApp" managed-type-token-id="33554490" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechPlaybackService_UtteranceListener" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechPlaybackService+UtteranceListener, FoodNutritionApp" managed-type-token-id="33554622" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechRecognitionService_ActivityResultCallback" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+ActivityResultCallback, FoodNutritionApp" managed-type-token-id="33554631" />
+    <entry java-name="crc645759c937ba45c653/AndroidSpeechRecognitionService_SpeechListener" managed-name="FoodNutritionApp.Platforms.Android.AndroidSpeechRecognitionService+SpeechListener, FoodNutritionApp" managed-type-token-id="33554632" />
+  </managed-to-java>
+</api>
